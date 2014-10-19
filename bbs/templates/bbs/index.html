@@ -1,0 +1,78 @@
+{% extends "bbs/base.html" %}
+{% block title %}Pybbs{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="header">
+		<ul class="nav nav-pills pull-right">
+			<li class="active"><a href="{% url 'bbs:index' %}">首页</a></li>
+			<li><a href="#">关于</a></li>
+		</ul>
+		<h2 class="text-muted">简易聊天版</h2>
+	</div>
+	<hr />
+	<div class="row">
+	<form id="form_thread" class="form-horizontal" role="form" action="{% url 'bbs:post_thread' %}" method="post">
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="title" class="col-sm-2 control-label">标题</label>
+		<div class="col-sm-8">
+			<input type="text" id="title" name="title" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="content" class="col-sm-2 control-label">内容</label>
+		<div class="col-sm-8">
+			<textarea id="content" name="content" class="form-control" rows="3"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-8">
+			<button type="button" id="send" class="btn btn-default">发布</button>
+		</div>
+	</div>
+	</form>
+	</div>
+	<hr />
+
+	{% for t in thread_list %}
+	<div class="row">
+	<h3><a href="{% url 'bbs:thread' t.id %}">{{ t.title }}</a></h3>
+	<h6 class="text-muted">{{t.pub_date}}</h6>
+	<p>{{ t.content }}</p>
+	</div>
+	<hr />
+	{% empty %}
+	<p>还没有主题</p>
+	<hr />
+	{% endfor %}
+	<div class="row">
+		<ul class="pager">
+			{% if thread_list.has_previous %}  
+			<li><a href="{% url 'bbs:index' thread_list.previous_page_number %}">上一页</a></li>
+			{% else %}
+			<li class="disabled"><a href="#">上一页</a></li>
+			{% endif %}
+			<li>第{{thread_list.number}}页 / 共{{thread_list.paginator.num_pages}}页</li>
+			{% if thread_list.has_next %}  
+			<li><a href="{% url 'bbs:index' thread_list.next_page_number %}">下一页</a></li>
+			{% else %}
+			<li class="disabled"><a href="#">下一页</a></li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	$("#send").click(function(){
+		if($("#title").val().trim()==""){
+			return;
+		}
+		if($("#content").val().trim()==""){
+			return;
+		}
+		$("#form_thread").submit();
+	});
+});
+</script>
+{% endblock %}

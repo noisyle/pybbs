@@ -1,0 +1,60 @@
+{% extends "bbs/base.html" %}
+{% block title %}{{thread.title}} - Pybbs{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="header">
+		<ul class="nav nav-pills pull-right">
+			<li><a href="{% url 'bbs:index' %}">首页</a></li>
+			<li><a href="#">关于</a></li>
+		</ul>
+		<h2 class="text-muted">简易聊天版</h2>
+	</div>
+	<hr />
+	<div class="row">
+	<h2>{{ thread.title }}</h2>
+	<h6 class="text-muted">{{thread.pub_date}}</h6>
+	</div>
+	<div class="row">
+	<p>{{ thread.content }}</p>
+	</div>
+	<hr />
+	{% for comment in comments %}
+	<div class="row">
+	<p>{{comment.content}}</p>
+	<h6 class="text-muted">{{comment.pub_date}}</h6>
+	</div>
+	<hr />
+	{% empty %}
+	<p>还没有评论</p>
+	<hr />
+	{% endfor %}
+	<div class="row">
+	<form id="form_comment" class="form-horizontal" role="form" action="{% url 'bbs:send_comment' thread.id %}" method="post">
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="content" class="col-sm-2 control-label">评论</label>
+		<div class="col-sm-8">
+			<textarea id="content" name="content" class="form-control" rows="3"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-8">
+			<button type="button" id="send" class="btn btn-default">发布</button>
+		</div>
+	</div>
+	</form>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+$(function(){
+	$("#send").click(function(){
+		if($("#content").val().trim()==""){
+			return;
+		}
+		$("#form_comment").submit();
+	});
+});
+</script>
+{% endblock %}

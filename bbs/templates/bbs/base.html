@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Pybbs{% endblock %}</title>
+
+<link href="{% static 'bbs/css/bootstrap.css' %}" rel="stylesheet">
+
+<!--[if lt IE 9]>
+<script src="{% static 'bbs/js/html5shiv.min.js' %}"></script>
+<script src="{% static 'bbs/js/respond.min.js' %}"></script>
+<![endif]-->
+<script src="{% static 'bbs/js/jquery-1.11.1.js' %}"></script>
+<script src="{% static 'bbs/js/bootstrap.js' %}"></script>
+</head>
+<body>
+
+{% block body %}Hello, World!{% endblock %}
+
+</body>
+</html>
+
