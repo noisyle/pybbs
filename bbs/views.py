@@ -17,6 +17,8 @@ def index(request,page=1):
 
 def post_thread(request):
     thread = Thread(title=request.POST['title'], content=request.POST['content'])
+    if 'image' in request.FILES:
+        thread.image = request.FILES['image']
     thread.save()
     return HttpResponseRedirect(reverse('bbs:index'))
 

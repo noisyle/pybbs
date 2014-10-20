@@ -1,6 +1,7 @@
 # custom config
 /db.sqlite3
 /bbs/migrations/
+/upload/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,6 +4,7 @@ from django.db import models
 class Thread(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
+    image = models.ImageField(upload_to="bbs/images/%Y/%m/%d",null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return self.title
