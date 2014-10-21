@@ -29,5 +29,8 @@ def thread(request, thread_id):
 
 def send_comment(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
-    thread.comment_set.create(content=request.POST['content'])
+    comment = thread.comment_set.create(content=request.POST['content'])
+    if 'image' in request.FILES:
+        comment.image = request.FILES['image']
+        comment.save()
     return HttpResponseRedirect(reverse('bbs:thread', args=(thread.id,)))
