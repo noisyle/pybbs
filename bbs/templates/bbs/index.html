@@ -44,7 +44,7 @@
 	<div class="row">
 	{% if t.image %}
 	<div class="col-sm-2">
-		<img src="{{t.image.url}}" class="img-responsive img-thumbnail" />
+		<a href="{{t.image.url}}" target="_blank"><img src="{{t.image.url}}" class="img-responsive img-thumbnail" /></a>
 	</div>
 	{% endif %}
 	<div class="col-sm-10">
@@ -83,6 +83,15 @@ $(function(){
 		}
 		if($("#content").val().trim()==""){
 			e.preventDefault();
+		}
+		var ext_list="bmp,png,gif,jpeg,jpg";
+		if($("#image").val()!=""){
+			var file_path = $("#image").val()
+			var ext = file_path.substring(file_path.lastIndexOf(".")+1,file_path.length).toLowerCase()
+			if(ext_list.indexOf(ext)<0){
+				alert("只能上传"+ext_list+"格式的图片！");
+				e.preventDefault();
+			}
 		}
 	});
 });

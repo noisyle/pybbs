@@ -15,7 +15,14 @@
 	<h6 class="text-muted">{{thread.pub_date}}</h6>
 	</div>
 	<div class="row">
+	{% if thread.image %}
+	<div class="col-sm-4">
+		<a href="{{thread.image.url}}" target="_blank"><img src="{{thread.image.url}}" class="img-responsive img-thumbnail" /></a>
+	</div>
+	{% endif %}
+	<div class="col-sm-8">
 	<p>{{ thread.content }}</p>
+	</div>
 	</div>
 	<hr />
 	{% for comment in comments %}
