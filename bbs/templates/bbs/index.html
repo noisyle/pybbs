@@ -42,15 +42,41 @@
 
 	{% for t in thread_list %}
 	<div class="row">
+	<div class="col-sm-12">
+	<h3><a href="{% url 'bbs:thread' t.id %}">{{ t.title }}</a></h3>
+	<h6 class="text-muted">{{t.pub_date}}</h6>
+	</div>
+	</div>
+	<div class="row">
 	{% if t.image %}
 	<div class="col-sm-2">
 		<a href="{{t.image.url}}" target="_blank"><img src="{{t.image.url}}" class="img-responsive img-thumbnail" /></a>
 	</div>
 	{% endif %}
 	<div class="col-sm-10">
-	<h3><a href="{% url 'bbs:thread' t.id %}">{{ t.title }}</a></h3>
-	<h6 class="text-muted">{{t.pub_date}}</h6>
 	<p>{{ t.content }}</p>
+		{% if t.comment_set.count > 0 %}
+		<hr />
+		<h6>共有{{t.comment_set.count}}条评论 <a href="{% url 'bbs:thread' t.id %}">查看全部评论</a></h6>
+		<div class="well well-sm">
+		{% for comment in t.comment_set.all %}
+		{% if forloop.counter0 < 10 %}
+		<div class="row">
+		{% if comment.image %}
+		<div class="col-sm-2">
+			<a href="{{comment.image.url}}" target="_blank"><img src="{{comment.image.url}}" class="img-responsive img-thumbnail" /></a>
+		</div>
+		{% endif %}
+		<div class="col-sm-10">
+		<h6 class="text-muted">{{comment.pub_date}}</h6>
+		<p>{{comment.content}}</p>
+		</div>
+		</div>
+		<hr />
+		{% endif %}
+		{% endfor %}
+		</div>
+		{% endif %}
 	</div>
 	</div>
 	<hr />
@@ -58,6 +84,7 @@
 	<p>还没有主题</p>
 	<hr />
 	{% endfor %}
+
 	<div class="row">
 		<ul class="pager">
 			{% if thread_list.has_previous %}  

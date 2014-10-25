@@ -24,8 +24,7 @@ def post_thread(request):
 
 def thread(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
-    comments = thread.comment_set.order_by("-pub_date")
-    return render(request,"bbs/thread.html",{"thread":thread,"comments":comments})
+    return render(request,"bbs/thread.html",{"thread":thread})
 
 def send_comment(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)

@@ -25,7 +25,7 @@
 	</div>
 	</div>
 	<hr />
-	{% for comment in comments %}
+	{% for comment in thread.comment_set.all %}
 	<div class="row">
 	{% if comment.image %}
 	<div class="col-sm-4">
